@@ -1,32 +1,54 @@
 import express from "express";
 import { Server } from "socket.io";
-import { createServer } from "http";
 import cors from "cors";
+import dotenv from "dotenv";
+import messageRoutes from "./routes/messageRoutes.js";
+import Message from "./models/message.js";
+import http from "http";
+import connectDB from "./utils/connectDB.js";
+dotenv.config();
 
 const app = express();
-const server = createServer(app);
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
 
 app.use(cors());
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Server is UP!");
-});
+app.use("/msg", messageRoutes);
 
-const io = new Server(server);
-
+// Socket.IO
 io.on("connection", (socket) => {
-  console.log("New Chat connection");
+  console.log("A user connected:", socket.id);
 
-  socket.on("chatMessage", (message) => {
-    console.log("Message received:", message);
-    io.emit("chatMessage", message);
+  // Join a room
+  socket.on("joinRoom", (room) => {
+    socket.join(room);
+    console.log(`User ${socket.id} joined room ${room}`);
   });
 
+  // Send a message
+  socket.on("sendMessage", async (data) => {
+    const { room, sender, text } = data;
+    const message = new Message({ room, sender, text });
+    await message.save();
+    io.to(room).emit("receiveMessage", message); // Broadcast to the room
+  });
+
+  // Disconnect
   socket.on("disconnect", () => {
-    console.log("User disconnected");
+    console.log("A user disconnected:", socket.id);
   });
 });
 
-server.listen(5000, () => {
-  console.log("Server is running on port 5000");
+connectDB();
+
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

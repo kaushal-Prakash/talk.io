@@ -1,4 +1,4 @@
-import Message from "../models/message";
+import Message from "../models/message.js";
 
 const sendMessage = async (req, res) => {
   const { room, sender, text } = req.body;
