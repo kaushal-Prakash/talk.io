@@ -16,8 +16,8 @@ export default function Message({ sender, text, isCurrentUser }: MessageProps) {
     >
       <div
         className={`${
-          isCurrentUser ? "bg-blue-500" : "bg-gray-500"
-        } text-white rounded-lg p-3 max-w-xs break-words`}
+          isCurrentUser ? "bg-blue-600" : "bg-gray-700"
+        } text-white rounded-lg p-3 max-w-xs break-words backdrop-blur-lg bg-opacity-50 border border-gray-600`}
       >
         <p className="text-sm font-semibold">{sender}</p>
         <p>{text}</p>
