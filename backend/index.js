@@ -26,21 +26,20 @@ app.use("/msg", messageRoutes);
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
 
-  // Join a room
-  socket.on("joinRoom", (room) => {
+  // Handle joining a room
+  socket.on("joinRoom", (data) => {
+    const { room, username } = data;
     socket.join(room);
-    console.log(`User ${socket.id} joined room ${room}`);
+    console.log(`User ${username} joined room: ${room}`);
   });
 
-  // Send a message
-  socket.on("sendMessage", async (data) => {
-    const { room, sender, text } = data;
-    const message = new Message({ room, sender, text });
-    await message.save();
-    io.to(room).emit("receiveMessage", message); // Broadcast to the room
+  // Handle sending a message
+  socket.on("sendMessage", (data) => {
+    const { room, username, text } = data;
+    io.to(room).emit("receiveMessage", { sender: username, text });
   });
 
-  // Disconnect
+  // Handle disconnection
   socket.on("disconnect", () => {
     console.log("A user disconnected:", socket.id);
   });

@@ -1,6 +1,7 @@
-import { FaComments } from "react-icons/fa";
+import React from 'react'
+import { FaComments } from 'react-icons/fa';
 
-export default function Navbar() {
+function Navbar() {
   return (
     <nav className="bg-blue-600 p-4 text-white shadow-lg">
       <div className="container mx-auto flex items-center">
@@ -10,3 +11,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
+export default Navbar
