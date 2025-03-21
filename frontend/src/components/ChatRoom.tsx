@@ -33,8 +33,8 @@ export default function ChatRoom({ socket, room, username }: ChatRoomProps) {
 
   const sendMessage = () => {
     const plane = document.querySelector('.plane');
-    plane?.classList.add('animate');
     if (input.trim()) {
+      plane?.classList.add('animate');
       socket.emit("sendMessage", { room, username, text: input });
       setInput("");
     }
