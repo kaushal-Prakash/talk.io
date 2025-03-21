@@ -1,6 +1,5 @@
-import Link from 'next/link'; 
 import React from 'react';
-import { FaComments, FaHome } from 'react-icons/fa'; // Added FaHome icon
+import { FaComments } from 'react-icons/fa'; // Added FaHome icon
 
 function Navbar() {
   return (
