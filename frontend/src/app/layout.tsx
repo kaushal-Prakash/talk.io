@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "chat.io",
   description: "A simple chat app",
-  authors:[{name: "devShadow"}]
+  authors:[{name: "devShadow"}],
+  icons:{icon : "/icon.png"}
 };
 
 export default function RootLayout({
