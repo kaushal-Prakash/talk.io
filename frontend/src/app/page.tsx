@@ -47,7 +47,7 @@ function Home() {
               </div>
               <button
                 onClick={joinRoom}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all duration-300 flex items-center justify-center"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all duration-300 flex items-center justify-center cursor-pointer"
               >
                 <FaRocket className="mr-2" />
                 Join Room
