@@ -32,10 +32,15 @@ export default function ChatRoom({ socket, room, username }: ChatRoomProps) {
   }, [socket]);
 
   const sendMessage = () => {
+    const plane = document.querySelector('.plane');
+    plane?.classList.add('animate');
     if (input.trim()) {
       socket.emit("sendMessage", { room, username, text: input });
       setInput("");
     }
+    setTimeout(() => {
+      plane?.classList.remove('animate');
+    }, 1000);
   };
 
   return (
@@ -65,9 +70,9 @@ export default function ChatRoom({ socket, room, username }: ChatRoomProps) {
           />
           <button
             onClick={sendMessage}
-            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-lg transition-all duration-300"
+            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-lg transition-all duration-300 cursor-pointer btn"
           >
-            <FaPaperPlane />
+            <FaPaperPlane className="plane"/>
           </button>
         </div>
       </div>
